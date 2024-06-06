@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if not current_user.is_authenticated %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to My Blog!</h1>
+    <p class="lead">This is a simple blog built with Flask.</p>
+    <hr class="my-4">
+    <p>Click below to view the latest posts or create a new account to start blogging.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>
+    <a class="btn btn-secondary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+</div>
+{% endif %}
+
+<h2>All Posts</h2>
+{% for post in all_posts %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text"><small class="text-muted">Posted by: {{ post.user.username }}</small></p>
+        </div>
+    </div>
+{% else %}
+    <p>No posts available.</p>
+{% endfor %}
+{% endblock %}

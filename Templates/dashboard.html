@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ name }}!</h1>
+<a class="btn btn-primary" href="{{ url_for('create') }}">Create New Post</a>
+
+<h2>Your Posts</h2>
+{% for post in user_posts %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content }}</p>
+            <p class="card-text"><small class="text-muted">Posted by: {{ post.user.username }}</small></p>
+            <a href="{{ url_for('edit', post_id=post.id) }}" class="btn btn-primary">Edit</a>
+            <form action="{{ url_for('delete', post_id=post.id) }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+{% else %}
+    <p>You have no posts yet.</p>
+{% endfor %}
+{% endblock %}
